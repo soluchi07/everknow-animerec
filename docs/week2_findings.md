@@ -1,0 +1,1 @@
+“Rank and popularity represent orthogonal signals — quality versus exposure. By modeling both explicitly and transforming them downstream, the system balances discovery with mainstream appeal under real-world data constraints.”
