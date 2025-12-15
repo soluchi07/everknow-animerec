@@ -12,7 +12,7 @@ CREATE TABLE anime (
   rank INT,
   popularity INT,
   members INT,
-  favorites INT,
+  favorites INT
 );
 
 -- Genres
@@ -21,29 +21,29 @@ CREATE TABLE genres (
   name TEXT UNIQUE
 );
 
+CREATE TABLE studios (
+  studio_id INT PRIMARY KEY,
+  name TEXT UNIQUE
+);
+
+CREATE TABLE users (
+  user_id SERIAL PRIMARY KEY,
+  user_type TEXT CHECK (user_type IN ('synthetic', 'implicit')),
+  description TEXT
+);
+
+
+
 CREATE TABLE anime_genres (
   anime_id INT REFERENCES anime(anime_id),
   genre_id INT REFERENCES genres(genre_id),
   PRIMARY KEY (anime_id, genre_id)
 );
 
--- Studios
-CREATE TABLE studios (
-  studio_id INT PRIMARY KEY,
-  name TEXT UNIQUE
-);
-
 CREATE TABLE anime_studios (
   anime_id INT REFERENCES anime(anime_id),
   studio_id INT REFERENCES studios(studio_id),
   PRIMARY KEY (anime_id, studio_id)
-);
-
--- Users
-CREATE TABLE users (
-  user_id SERIAL PRIMARY KEY,
-  user_type TEXT CHECK (user_type IN ('synthetic', 'implicit')),
-  description TEXT
 );
 
 -- Implicit interactions
@@ -72,8 +72,8 @@ CREATE INDEX idx_anime_title ON anime(title);
 CREATE INDEX idx_anime_genres_genre ON anime_genres(genre_id);
 CREATE INDEX idx_implicit_anime ON implicit_interactions(anime_id);
 
-COPY anime FROM '/docker-entrypoint-initdb.d/anime.csv' CSV HEADER;
-COPY studios FROM '/docker-entrypoint-initdb.d/studios.csv' CSV HEADER;
-COPY genres FROM '/docker-entrypoint-initdb.d/genres.csv' CSV HEADER;
-COPY anime_genres FROM '/docker-entrypoint-initdb.d/anime_genres.csv' CSV HEADER;
-COPY anime_studios FROM '/docker-entrypoint-initdb.d/anime_studios.csv' CSV HEADER;
+COPY studios FROM '/data/processed/studios.csv' CSV HEADER;
+COPY genres FROM '/data/processed/genres.csv' CSV HEADER;
+COPY anime FROM '/data/processed/anime.csv' CSV HEADER;
+COPY anime_genres FROM '/data/processed/anime_genres.csv' CSV HEADER;
+COPY anime_studios FROM '/data/processed/anime_studios.csv' CSV HEADER;

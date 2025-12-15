@@ -13,13 +13,54 @@ anime_studio_rows = []
 studio_rows = {}
 genre_lookup = {}
 
+seen_ids = set()
+unique_anime = []
+
 for a in raw:
     anime_id = a["mal_id"]
+    if anime_id not in seen_ids:
+        seen_ids.add(anime_id)
+        unique_anime.append(a)
+    else:
+        print(f"⚠️  Duplicate found: {anime_id} - {a.get('title', 'Unknown')}")
 
+print(f"Original: {len(raw)} anime")
+print(f"Unique: {len(unique_anime)} anime")
+print(f"Duplicates removed: {len(raw) - len(unique_anime)}")
+
+def format_pg_array(titles_list):
+    if not titles_list:
+        return None
+
+    filtered = []
+    for title in titles_list:
+        if title and title.strip():
+            if cleaned := title.strip().strip(',').strip():
+                filtered.append(cleaned)
+    
+    if not filtered:
+        return None
+
+    escaped = []
+    for title in filtered:        
+        title = (title
+                 .replace('\\', '\\\\')
+                 .replace('"', '\\"')
+                 .replace('{', '\\{')
+                 .replace('}', '\\}')
+                )
+        escaped.append(title)
+    
+    return '{' + ','.join(escaped) + '}'
+      
+for a in unique_anime:
+    anime_id = a["mal_id"]
+    alt_titles = [title["title"] for title in a["titles"] if title["type"] != "Default"]
+    
     anime_rows.append({
         "anime_id": anime_id,
         "title": a["title"],
-        "alternative_titles": [title["title"] for title in a["titles"] if title["type"] != "Default"],
+        "alternative_titles": format_pg_array(alt_titles),
         "synopsis": a["synopsis"],
         "year": a["year"],
         "type": a["type"],
@@ -57,6 +98,13 @@ for a in raw:
         })
 
 anime_df = pd.DataFrame(anime_rows)
+
+int_columns = ['year', 'episodes', 'rank', 'popularity', 'members', 'favorites']
+
+for col in int_columns:
+    if col in anime_df.columns:
+        anime_df[col] = anime_df[col].astype('Int64')
+
 anime_genres_df = pd.DataFrame(anime_genre_rows)
 anime_studios_df = pd.DataFrame(anime_studio_rows)
 

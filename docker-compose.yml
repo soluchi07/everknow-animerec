@@ -15,6 +15,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db/init:/docker-entrypoint-initdb.d
+      - ./data/processed:/data/processed
 
   redis:
     image: redis:8
