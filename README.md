@@ -16,7 +16,7 @@ Built for technical interviews and portfolio demonstrations, this project tells 
 ## 🏗️ Architecture Overview
 
 ```
-Data Sources (AniList/MAL API)
+Data Sources (Jikan API)
          ↓
     ETL Pipeline
          ↓
