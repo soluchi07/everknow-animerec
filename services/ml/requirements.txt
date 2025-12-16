@@ -1,0 +1,14 @@
+pandas>=2.0.0            # Essential for data manipulation (synthetic_cf.py, content_model.py, etc.)
+numpy>=1.24.0            # Numerical operations, required by many ML libraries
+
+psycopg2-binary>=2.9.0   # PostgreSQL adapter for SQLAlchemy
+SQLAlchemy>=2.0.0        # Database ORM/toolkit for connecting to Postgres (db.py)
+requests>=2.31.0         # Used in fetch_anime.py for interacting with the Jikan API
+
+scikit-learn>=1.3.0      # For TF-IDF Vectorization and Cosine Similarity (content_model.py)
+
+implicit>=0.7.0          # Highly optimized library for implicit feedback datasets
+
+redis>=5.0.0             # For interacting with the Redis service
+
+tqdm>=4.66.1             # Progress bars for long-running ETL/ML processes

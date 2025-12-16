@@ -41,5 +41,19 @@ services:
     volumes:
       - ./services/api:/app
 
+  ml:
+    build:
+      context: ./services/ml     
+      dockerfile: Dockerfile
+    container_name: anime_ml
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://anime_user:anime_pass@postgres:5432/anime_db
+    volumes:
+      - .:/app                         
+      - ./data/processed:/app/data/processed 
+    command: ["tail", "-f", "/dev/null"]
+
 volumes:
   pgdata:
