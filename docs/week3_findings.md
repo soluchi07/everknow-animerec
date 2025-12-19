@@ -9,7 +9,7 @@ Week 3 focused on implementing and validating a multi-stage recommendation syste
 * A hybrid recommender combining both signals
 
 The emphasis was on correct experimental staging, scalability, and clean separation between data generation, modeling, and persistence.
-<![Recommendation Architecture Diagram](./reccommendation_arch.png)>
+![Recommendation Architecture Diagram](./reccommendation_arch.png)
 ---
 
 ## Content-Based Recommender
