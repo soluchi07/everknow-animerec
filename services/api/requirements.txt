@@ -3,4 +3,5 @@ uvicorn
 psycopg2-binary
 redis
 sqlalchemy
+joblib
 pydantic

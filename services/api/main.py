@@ -1,7 +1,17 @@
 from fastapi import FastAPI
-import os
+from routes.recommend import router as recommend_router
 
-app = FastAPI()
+app = FastAPI(
+    title="Anime Recommendation API",
+    version="0.1.0",
+)
+
+# Register routes
+app.include_router(
+    recommend_router,
+    prefix="/api",
+    tags=["recommendations"],
+)
 
 @app.get("/")
 def root():
