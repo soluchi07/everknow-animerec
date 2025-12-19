@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.recommend import router as recommend_router
+from api.routes.recommend import router as recommend_router
 
 app = FastAPI(
     title="Anime Recommendation API",
